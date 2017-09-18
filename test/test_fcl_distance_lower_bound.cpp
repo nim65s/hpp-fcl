@@ -127,8 +127,8 @@ BOOST_AUTO_TEST_CASE(mesh_mesh)
   loadOBJFile((path / "env.obj").string().c_str(), p1, t1);
   loadOBJFile((path / "rob.obj").string().c_str(), p2, t2);
 
-  boost::shared_ptr < BVHModel <OBBRSS> > m1 (new BVHModel <OBBRSS>);
-  boost::shared_ptr < BVHModel <OBBRSS> > m2 (new BVHModel <OBBRSS>);
+  std::shared_ptr < BVHModel <OBBRSS> > m1 (new BVHModel <OBBRSS>);
+  std::shared_ptr < BVHModel <OBBRSS> > m2 (new BVHModel <OBBRSS>);
 
   m1->beginModel();
   m1->addSubModel(p1, t1);
@@ -174,8 +174,8 @@ BOOST_AUTO_TEST_CASE(box_mesh)
 
   loadOBJFile((path / "env.obj").string().c_str(), p1, t1);
 
-  boost::shared_ptr < BVHModel <OBBRSS> > m1 (new BVHModel <OBBRSS>);
-  boost::shared_ptr < fcl::Box > m2 (new fcl::Box (500, 200, 150));
+  std::shared_ptr < BVHModel <OBBRSS> > m1 (new BVHModel <OBBRSS>);
+  std::shared_ptr < fcl::Box > m2 (new fcl::Box (500, 200, 150));
 
   m1->beginModel();
   m1->addSubModel(p1, t1);

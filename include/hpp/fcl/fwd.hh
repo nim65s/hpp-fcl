@@ -36,11 +36,11 @@
 
 namespace fcl {
   class CollisionObject;
-  typedef boost::shared_ptr <CollisionObject> CollisionObjectPtr_t;
-  typedef boost::shared_ptr < const CollisionObject> CollisionObjectConstPtr_t;
+  typedef std::shared_ptr <CollisionObject> CollisionObjectPtr_t;
+  typedef std::shared_ptr < const CollisionObject> CollisionObjectConstPtr_t;
   class CollisionGeometry;
-  typedef boost::shared_ptr <CollisionGeometry> CollisionGeometryPtr_t;
-  typedef boost::shared_ptr <const CollisionGeometry>
+  typedef std::shared_ptr <CollisionGeometry> CollisionGeometryPtr_t;
+  typedef std::shared_ptr <const CollisionGeometry>
   CollisionGeometryConstPtr_t;
   class Transform3f;
 

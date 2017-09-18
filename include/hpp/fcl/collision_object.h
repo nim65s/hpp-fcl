@@ -42,7 +42,6 @@
 #include <hpp/fcl/deprecated.h>
 #include <hpp/fcl/BV/AABB.h>
 #include <hpp/fcl/math/transform.h>
-#include <boost/shared_ptr.hpp>
 
 namespace fcl
 {
@@ -150,7 +149,7 @@ public:
 class CollisionObject
 {
 public:
- CollisionObject(const boost::shared_ptr<CollisionGeometry> &cgeom_) :
+ CollisionObject(const std::shared_ptr<CollisionGeometry> &cgeom_) :
     cgeom(cgeom_), cgeom_const(cgeom_)
   {
     if (cgeom)
@@ -160,14 +159,14 @@ public:
     }
   }
 
-  CollisionObject(const boost::shared_ptr<CollisionGeometry> &cgeom_, const Transform3f& tf) :
+  CollisionObject(const std::shared_ptr<CollisionGeometry> &cgeom_, const Transform3f& tf) :
     cgeom(cgeom_), cgeom_const(cgeom_), t(tf)
   {
     cgeom->computeLocalAABB();
     computeAABB();
   }
 
-  CollisionObject(const boost::shared_ptr<CollisionGeometry> &cgeom_, const Matrix3f& R, const Vec3f& T):
+  CollisionObject(const std::shared_ptr<CollisionGeometry> &cgeom_, const Matrix3f& R, const Vec3f& T):
       cgeom(cgeom_), cgeom_const(cgeom_), t(Transform3f(R, T))
   {
     cgeom->computeLocalAABB();
@@ -304,13 +303,13 @@ public:
   }
 
   /// @brief get geometry from the object instance
-  const boost::shared_ptr<const CollisionGeometry>& collisionGeometry() const
+  const std::shared_ptr<const CollisionGeometry>& collisionGeometry() const
   {
     return cgeom_const;
   }
 
   /// @brief get geometry from the object instance
-  const boost::shared_ptr<CollisionGeometry>& collisionGeometry()
+  const std::shared_ptr<CollisionGeometry>& collisionGeometry()
   {
     return cgeom;
   }
@@ -347,8 +346,8 @@ public:
 
 protected:
 
-  boost::shared_ptr<CollisionGeometry> cgeom;
-  boost::shared_ptr<const CollisionGeometry> cgeom_const;
+  std::shared_ptr<CollisionGeometry> cgeom;
+  std::shared_ptr<const CollisionGeometry> cgeom_const;
 
   Transform3f t;
 

@@ -40,7 +40,6 @@
 #define FCL_OCTREE_H
 
 
-#include <boost/shared_ptr.hpp>
 #include <boost/array.hpp>
 
 #include <octomap/octomap.h>
@@ -54,7 +53,7 @@ namespace fcl
 class OcTree : public CollisionGeometry
 {
 private:
-  boost::shared_ptr<const octomap::OcTree> tree;
+  std::shared_ptr<const octomap::OcTree> tree;
 
   FCL_REAL default_occupancy;
 
@@ -66,7 +65,7 @@ public:
   typedef octomap::OcTreeNode OcTreeNode;
 
   /// @brief construct octree with a given resolution
-  OcTree(FCL_REAL resolution) : tree(boost::shared_ptr<const octomap::OcTree>(new octomap::OcTree(resolution)))                               
+  OcTree(FCL_REAL resolution) : tree(std::shared_ptr<const octomap::OcTree>(new octomap::OcTree(resolution)))                               
   {
     default_occupancy = tree->getOccupancyThres();
 
@@ -76,7 +75,7 @@ public:
   }
 
   /// @brief construct octree from octomap
-  OcTree(const boost::shared_ptr<const octomap::OcTree>& tree_) : tree(tree_)
+  OcTree(const std::shared_ptr<const octomap::OcTree>& tree_) : tree(tree_)
   {
     default_occupancy = tree->getOccupancyThres();
 

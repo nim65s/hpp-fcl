@@ -50,7 +50,7 @@
 
 #include "test_fcl_utility.h"
 
-typedef boost::shared_ptr <fcl::CollisionGeometry> CollisionGeometryPtr_t;
+typedef std::shared_ptr <fcl::CollisionGeometry> CollisionGeometryPtr_t;
 
 using fcl::Transform3f;
 using fcl::Vec3f;

@@ -15,7 +15,6 @@
 // hpp-fcl. If not, see <http://www.gnu.org/licenses/>.
 
 
-#include <boost/shared_ptr.hpp>
 #include <boost/filesystem.hpp>
 
 #include <hpp/fcl/fwd.hh>
@@ -65,7 +64,7 @@ CollisionGeometryPtr_t objToGeom (const std::string& filename)
 template <typename BV/*, SplitMethodType split_method*/>
 CollisionGeometryPtr_t meshToGeom (const std::string& filename, const Vec3f& scale = Vec3f(1, 1, 1))
 {
-  boost::shared_ptr< BVHModel<BV> > model (new BVHModel<BV>());
+  std::shared_ptr< BVHModel<BV> > model (new BVHModel<BV>());
   loadPolyhedronFromResource(filename, scale, model);
   return model;
 }
@@ -179,12 +178,12 @@ Geometry makeGeomFromParam(int& iarg, const int& argc, char** argv)
     OUT("Loading " << argv[iarg+2] << " as BVHModel<" << argv[iarg+1] << ">...");
     if (strcmp(argv[iarg+1], "obb") == 0) {
       o = meshToGeom<OBB>(argv[iarg+2]);
-      OUT("Mesh has " << boost::dynamic_pointer_cast<BVHModel<OBB> >(o)->num_tris << " triangles");
+      OUT("Mesh has " << std::dynamic_pointer_cast<BVHModel<OBB> >(o)->num_tris << " triangles");
       type = "mesh_obb";
     }
     else if (strcmp(argv[iarg+1], "obbrss") == 0) {
       o = meshToGeom<OBBRSS>(argv[iarg+2]);
-      OUT("Mesh has " << boost::dynamic_pointer_cast<BVHModel<OBBRSS> >(o)->num_tris << " triangles");
+      OUT("Mesh has " << std::dynamic_pointer_cast<BVHModel<OBBRSS> >(o)->num_tris << " triangles");
       type = "mesh_obbrss";
     }
     else
@@ -205,7 +204,7 @@ Geometry makeGeomFromParam(int& iarg, const int& argc, char** argv)
       OUT("Mesh AABB is " << o->aabb_local.min_.transpose() << " ---- " << o->aabb_local.max_.transpose() << " ...");
       o.reset(extract(o.get(), Transform3f(), aabb));
       if (!o) throw std::invalid_argument ("Failed to crop.");
-      OUT("Crop has " << boost::dynamic_pointer_cast<BVHModel<OBB> >(o)->num_tris << " triangles");
+      OUT("Crop has " << std::dynamic_pointer_cast<BVHModel<OBB> >(o)->num_tris << " triangles");
       iarg += 7;
     }
   } else if (a == "-capsule") {

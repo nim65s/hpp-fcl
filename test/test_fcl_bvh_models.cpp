@@ -52,7 +52,7 @@ using namespace fcl;
 template<typename BV>
 void testBVHModelPointCloud()
 {
-  boost::shared_ptr<BVHModel<BV> > model(new BVHModel<BV>);
+  std::shared_ptr<BVHModel<BV> > model(new BVHModel<BV>);
 
   if (model->getNodeType() != BV_AABB
       && model->getNodeType() != BV_KDOP16
@@ -103,7 +103,7 @@ void testBVHModelPointCloud()
 template<typename BV>
 void testBVHModelTriangles()
 {
-  boost::shared_ptr<BVHModel<BV> > model(new BVHModel<BV>);
+  std::shared_ptr<BVHModel<BV> > model(new BVHModel<BV>);
   Box box(1,1,1);
   AABB aabb (Vec3f(-1,0,-1), Vec3f(1,1,1));
 
@@ -155,7 +155,7 @@ void testBVHModelTriangles()
   BOOST_CHECK_EQUAL(model->build_state, BVH_BUILD_STATE_PROCESSED);
 
   Transform3f pose;
-  boost::shared_ptr<BVHModel<BV> > cropped(BVHExtract(*model, pose, aabb));
+  std::shared_ptr<BVHModel<BV> > cropped(BVHExtract(*model, pose, aabb));
   BOOST_REQUIRE(cropped);
   BOOST_CHECK(cropped->build_state == BVH_BUILD_STATE_PROCESSED);
   BOOST_CHECK_EQUAL(cropped->num_vertices, model->num_vertices - 6);
@@ -193,7 +193,7 @@ void testBVHModelTriangles()
 template<typename BV>
 void testBVHModelSubModel()
 {
-  boost::shared_ptr<BVHModel<BV> > model(new BVHModel<BV>);
+  std::shared_ptr<BVHModel<BV> > model(new BVHModel<BV>);
   Box box;
 
   double a = box.side[0];
