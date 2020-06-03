@@ -408,14 +408,14 @@ class ClassCompound(CompoundBase):
             if len(_dc) == 0: continue
             attribute_docstrings += template_class_attribute_body.format(
                 attribute=member.find('name').text,
-                docstring=_dc,
+                docstring=_dc.decode(),
             )
         if len(docstring) == 0 and len(attribute_docstrings) == 0: return
         output.out(
             template_class_doc.format(
                 tplargs=self._templateDecl(),
                 classname=self._className(),
-                docstring=docstring,
+                docstring=docstring.decode(),
                 attributes=attribute_docstrings,
             ))
 
@@ -460,7 +460,7 @@ class ClassCompound(CompoundBase):
                     template_destructor_doc.format(
                         tplargs=self._templateDecl(),
                         classname_prefix=self._className(),
-                        docstring=docstring,
+                        docstring=docstring.decode(),
                     ))
             else:
                 output.out(
@@ -471,7 +471,7 @@ class ClassCompound(CompoundBase):
                         comma=", " if len(member.params) > 0 else "",
                         classname_prefix=self._className(),
                         argsstring=member.s_args(),
-                        docstring=docstring,
+                        docstring=docstring.decode(),
                         argnamesstring=argnamesstring,
                     ))
 
@@ -494,7 +494,7 @@ class ClassCompound(CompoundBase):
                 template_member_func_doc_body.format(
                     classname_prefix=classname_prefix,
                     membername=member.s_name(),
-                    docstring=docstring,
+                    docstring=docstring.decode(),
                     rettype=member.s_rettype(),
                     argsstring=member.s_prototypeArgs(),
                 ) for member, docstring in zip(documented_members, docstrings)
@@ -611,7 +611,7 @@ class Index:
                 template_static_func_doc_body.format(
                     namespace=member.parent.innerNamespace(),
                     membername=member.s_name(),
-                    docstring=docstring,
+                    docstring=docstring.decode(),
                     rettype=member.s_rettype(),
                     argsstring=member.s_prototypeArgs(),
                 ) for member, docstring in member_and_docstring_s
