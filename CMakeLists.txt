@@ -64,16 +64,10 @@ SET(CMAKE_MODULE_PATH
 # If needed, fix CMake policy for APPLE systems
 APPLY_DEFAULT_APPLE_CONFIGURATION()
 
-OPTION(BUILD_PYTHON_INTERFACE "Build the python bindings" ON)
-
 COMPUTE_PROJECT_ARGS(PROJECT_ARGS LANGUAGES CXX)
 PROJECT(${PROJECT_NAME} ${PROJECT_ARGS})
 
-ADD_PROJECT_DEPENDENCY(Eigen3 REQUIRED PKG_CONFIG_REQUIRES "eigen3 >= 3.0.0")
-
-if(BUILD_PYTHON_INTERFACE)
-  FIND_PACKAGE(eigenpy 2.2 REQUIRED)
-endif()
+ADD_PROJECT_DEPENDENCY(Eigen3 REQUIRED)
 
 # Required dependencies
 SET_BOOST_DEFAULT_OPTIONS()
@@ -83,6 +77,7 @@ if (BUILD_PYTHON_INTERFACE)
   FINDPYTHON()
   search_for_boost_python(REQUIRED)
   find_package(Boost REQUIRED COMPONENTS system)
+  find_package(eigenpy 2.5.0 REQUIRED COMPONENTS "eigenpy${PYTHON_COMPONENT}")
 endif ()
 
 # Optional dependencies
@@ -101,9 +96,7 @@ endif()
 
 option(HPP_FCL_HAS_QHULL "use qhull library to compute convex hulls." FALSE)
 if(HPP_FCL_HAS_QHULL)
-  if(DEFINED CMAKE_CXX_STANDARD AND CMAKE_CXX_STANDARD EQUAL 98)
-    message(FATAL_ERROR "Cannot use qhull library with C++ < 11.\nYou may add -DCMAKE_CXX_STANDARD=11")
-  endif()
+  CHECK_MINIMAL_CXX_STANDARD(11 REQUIRED)
   file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/third-parties)
   execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink
     ${CMAKE_SOURCE_DIR}/third-parties/qhull/src/libqhullcpp
@@ -187,4 +180,6 @@ IF(HPP_FCL_HAVE_OCTOMAP)
 ENDIF(HPP_FCL_HAVE_OCTOMAP)
 
 # Install catkin package.xml
-INSTALL(FILES package.xml DESTINATION share/${PROJECT_NAME})
+if(NOT INSTALL_PYTHON_INTERFACE_ONLY)
+  INSTALL(FILES package.xml DESTINATION share/${PROJECT_NAME})
+endif()
